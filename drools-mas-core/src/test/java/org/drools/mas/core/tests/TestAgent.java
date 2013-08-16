@@ -15,7 +15,6 @@ package org.drools.mas.core.tests;
  * the License.
  */
 
-import java.sql.SQLException;
 
 import org.drools.grid.helper.GridHelper;
 import org.drools.grid.service.directory.WhitePages;
@@ -44,8 +43,6 @@ import org.drools.mas.Act;
 import org.drools.mas.Encodings;
 import org.drools.mas.core.*;
 import org.drools.mas.mappers.MyMapArgsEntryType;
-import org.h2.tools.DeleteDbFiles;
-import org.h2.tools.Server;
 
 import static org.junit.Assert.*;
 import org.slf4j.Logger;
@@ -56,23 +53,8 @@ import javax.persistence.Persistence;
 public class TestAgent {
 
     private static DroolsAgent mainAgent;
-    private static Logger logger = LoggerFactory.getLogger( TestAgent.class );
-    private static Server server;
+    private static final Logger logger = LoggerFactory.getLogger( TestAgent.class );
 
-
-    @BeforeClass
-    public static void setupDB() {
-        DeleteDbFiles.execute( "~", "mydb", false );
-
-        logger.info( "Staring DB for white pages ..." );
-        try {
-
-            server = Server.createTcpServer( new String[] { "-tcp","-tcpAllowOthers","-tcpDaemon","-trace" } ).start();
-        } catch ( SQLException ex ) {
-            logger.error( ex.getMessage() );
-        }
-        logger.info("DB for white pages started! ");
-    }
 
     @Test
     @Ignore( "Manual use only, test for memory leaks" )
@@ -116,19 +98,6 @@ public class TestAgent {
 
     }
 
-    @AfterClass
-    public static void cleanDB() {
-        logger.info("Stopping DB ...");
-        try {
-            Server.shutdownTcpServer(server.getURL(), "", false, false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        logger.info("DB Stopped!");
-
-    }
-
-
     private void waitForAnswers( String id, int expectedSize, long sleep, int maxIters ) {
         int counter = 0;
         do {
@@ -137,7 +106,6 @@ public class TestAgent {
                 Thread.sleep( sleep );
                 counter++;
             } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         } while ( mainAgent.peekAgentAnswers( id ).size() < expectedSize && counter < maxIters );
         if ( counter == maxIters ) {
