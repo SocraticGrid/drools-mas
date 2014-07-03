@@ -37,6 +37,7 @@
 		<module>drools-mas-core</module>
 		<module>drools-mas-core-test</module>
 		<module>drools-mas-generic-client</module>
+		<module>drools-mas-web-archetype</module>
 
 		<module>drools-mas-doc</module>
 	</modules>

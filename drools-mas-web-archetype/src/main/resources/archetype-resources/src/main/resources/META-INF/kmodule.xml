@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kmodule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://jboss.org/kie/6.0.0/kmodule">
+
+	<kbase name="mindKbase"
+	       packages="knowledge"
+	       includes="absent_mind"
+	       equalsBehavior="equality"
+	       eventProcessingMode="stream">
+                <ksession name="agent-mind" clockType="realtime" type="stateful" beliefSystem="simple" default="true" />
+	</kbase>
+
+	<kbase name="subsessionKbase"
+	       packages="knowledge.subsession"
+	       equalsBehavior="equality"
+	       eventProcessingMode="stream">
+		<ksession name="session1" clockType="realtime" type="stateful" beliefSystem="simple" default="true" />
+	</kbase>
+
+</kmodule>

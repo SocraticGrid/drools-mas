@@ -1,0 +1,39 @@
+
+/*
+    Domain-Specific, concrete routing rules.
+    Can exploit JsonPath / XPath queries on a message's
+    encoded form for type-unsafe checks, in addition to
+    standard pattern matching on a message content
+    represented in object form
+
+*/
+
+
+package org.drools.mas;
+
+import org.drools.mas.core.MappingLookup;
+import org.drools.mas.core.SessionMapping;
+import org.drools.mas.ACLMessage;
+import org.drools.mas.util.ACLMessageFactory;
+import org.drools.mas.body.acts.Inform;
+import org.drools.mas.body.content.*;
+import org.drools.mas.util.InspectMessageHelper;
+
+// ACL message factory, to generate responses
+global ACLMessageFactory aclFactory;
+
+
+rule "Mapping"
+when
+then
+    insert( new SessionMapping("agent-brain_hello-module","session1") );
+end
+
+
+rule "Simple Route"
+when
+    $msg : ACLMessage( $msgId : id, $b : body  )
+then
+    System.err.println("Routing message " + $msgId + " (JSON)" );
+    insert( new MappingLookup( $msgId, "agent-brain_hello-module" ) );
+end
