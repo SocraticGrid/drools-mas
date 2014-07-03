@@ -23,11 +23,13 @@ import java.util.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.drools.mas.mappers.MyMapArgsEntryType;
 import org.drools.mas.mappers.MyMapReferenceEntryType;
 
 @XmlType(name = "Action", namespace="http://content.body.mas.drools.org/")
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Action extends AbstractMessageContent implements Map<String, Object> {
     
@@ -36,11 +38,11 @@ public class Action extends AbstractMessageContent implements Map<String, Object
     @XmlElement(required = true)
     private String actionName;
     
-    @XmlElement(required = true)
+    //@XmlElement(required = true)
     public List<MyMapReferenceEntryType> references = new ArrayList<MyMapReferenceEntryType>(); 
     
     
-    @XmlElement(required = true)
+    //@XmlElement(required = true)
     private List<MyMapArgsEntryType> args = new ArrayList<MyMapArgsEntryType>();
     
     public Action() {

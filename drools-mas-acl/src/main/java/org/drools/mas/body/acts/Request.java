@@ -20,13 +20,15 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import org.drools.mas.Act;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.drools.mas.body.content.Action;
+import org.drools.mas.body.content.adapter.ActionAdapter;
 
 @XmlType(name = "Request", namespace = "http://acts.body.mas.drools.org/")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Request extends AbstractMessageBody {
 
+    @XmlJavaTypeAdapter(ActionAdapter.class)
     @XmlElement(required = true)
     private Action action;
     
